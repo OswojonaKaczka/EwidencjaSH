@@ -1,0 +1,55 @@
+{
+  "name": "EwidencjaSH",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@azure/msal-browser": "^2.32.2",
+    "@azure/msal-react": "^1.5.2",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/lab": "latest",
+    "@mui/material": "^5.11.3",
+    "@mui/styled-engine-sc": "latest",
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@testing-library/user-event": "latest",
+    "axios": "^1.2.2",
+    "formik": "^2.2.9",
+    "material-react-toastify": "^2.0.1",
+    "moment": "^2.29.4",
+    "preval.macro": "^5.0.0",
+    "react": "latest",
+    "react-cookie": "^4.1.1",
+    "react-dom": "latest",
+    "react-helmet": "^6.1.0",
+    "react-loading-screen": "^0.0.17",
+    "react-router-dom": "^6.6.1",
+    "react-scripts": "latest",
+    "react-toastify": "^9.1.1",
+    "recharts": "^2.2.0",
+    "styled-components": "latest",
+    "yup": "^0.32.11"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@craco/craco": "latest"
+  }
+}
