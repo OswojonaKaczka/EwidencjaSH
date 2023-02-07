@@ -22,6 +22,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import {
+  Autocomplete,
+  Button,
+  CircularProgress,
   FormControl,
   Grid,
   InputLabel,
@@ -30,6 +33,11 @@ import {
   TextField,
 } from "@mui/material";
 import { ClearTwoTone } from "@mui/icons-material";
+import { useState } from "react";
+import { useEffect } from "react";
+import { getAllMessagesCategories } from "../../api/messages.api";
+import { useMsal } from "@azure/msal-react";
+import { InteractionStatus } from "@azure/msal-browser";
 
 function createData(name, calories, fat, carbs, protein) {
   return {
@@ -177,25 +185,19 @@ function EnhancedTableToolbar(props) {
   const { numSelected } = props;
 
   return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-      }}
-    >
-      <Typography
-        sx={{ flex: "1 1 100%" }}
-        variant="h6"
-        id="tableTitle"
-        component="div"
-      >
-        Wszystkie komunikaty
-      </Typography>
-      <Tooltip title="Filter list">
-        <IconButton>
-          <FilterListIcon />
-        </IconButton>
-      </Tooltip>
+    <Toolbar>
+      <Grid container spacing={2}>
+        <Grid item xs={9}>
+          <Typography variant="h6" id="tableTitle" component="div">
+            Wszystkie komunikaty
+          </Typography>
+        </Grid>
+        <Grid item lg={3} xs={12}>
+          <Button variant="outlined" color="success" fullWidth>
+            Dodaj komunikat
+          </Button>
+        </Grid>
+      </Grid>
     </Toolbar>
   );
 }
@@ -211,6 +213,8 @@ export default function MessagesTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { inProgress } = useMsal();
+  const [messagesCategoriesData, setMessagesCategoriesData] = useState(null);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -262,66 +266,75 @@ export default function MessagesTable() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  useEffect(() => {
+    if (!messagesCategoriesData && inProgress == InteractionStatus.None) {
+      getAllMessagesCategories()
+        .then((response) => setMessagesCategoriesData(response))
+        .catch((error) => {
+          setError(true);
+        });
+    }
+  }, [inProgress]);
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar />
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ mt: 1, mb: 2 }}>
           <Grid item xs={3}>
-            <FormControl sx={{ m: 1 }} fullWidth>
-              <TextField
-                id="outlined-basic"
-                label="Wyszukaj komunikaty"
-                variant="outlined"
-                size="small"
-              />
-            </FormControl>
+            <TextField
+              id="outlined-basic"
+              label="Wyszukaj komunikaty"
+              variant="outlined"
+              size="small"
+              fullWidth
+            />
           </Grid>
           <Grid item xs={3}>
-            <FormControl sx={{ m: 1 }} fullWidth>
-              <InputLabel size="small" id="demo-simple-select-label">
-                Kategoria
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Kategoria"
-                size="small"
-              >
-                <MenuItem value={10} selected>
-                  Administracyjne
-                </MenuItem>
-                <MenuItem value={20}>Ogólne</MenuItem>
-              </Select>
-            </FormControl>
+            <Autocomplete
+              options={!messagesCategoriesData ? [] : messagesCategoriesData}
+              size="small"
+              getOptionLabel={(option) => option.category}
+
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Kategoria"
+                  variant="outlined"
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <React.Fragment>
+                        {!messagesCategoriesData ? (
+                          <CircularProgress color="inherit" size={20} />
+                        ) : null}
+                        {params.InputProps.endAdornment}
+                      </React.Fragment>
+                    ),
+                  }}
+                />
+              )}
+              fullWidth
+              noOptionsText="Brak danych"
+              loading={!messagesCategoriesData}
+              loadingText="Pobieranie danych..."
+            />
           </Grid>
           <Grid item xs={3}>
-            <FormControl sx={{ m: 1 }} fullWidth>
-              <InputLabel size="small" id="demo-simple-select-label">
-                Stan
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Stan"
-                size="small"
-                startAdornment={
-                  <IconButton
-                    sx={{ mr: 2 }}
-                    size="small"
-                    disableFocusRipple={false}
-                    disableRipple={false}
-                    >
-                    <ClearTwoTone />
-                  </IconButton>
-                }
-              >
-                <MenuItem value={10} selected>
-                  Opublikowane
-                </MenuItem>
-                <MenuItem value={20}>Archiwum</MenuItem>
-              </Select>
-            </FormControl>
+            <Autocomplete
+              options={[
+                { title: "Title 1" },
+                { title: "Title 2" },
+                { title: "Title 3" },
+                { title: "Title 4" },
+              ]}
+              getOptionLabel={(option) => option.title}
+              size="small"
+              renderInput={(params) => (
+                <TextField {...params} label="Combo box" variant="outlined" />
+              )}
+              fullWidth
+            />
           </Grid>
         </Grid>
 

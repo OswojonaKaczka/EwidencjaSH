@@ -28,61 +28,76 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import { visuallyHidden } from "@mui/utils";
 import { alpha } from "@mui/material/styles";
 import MessagesTable from "../../components/tables/messages.table";
+import { MsalAuthenticationTemplate, useMsal } from "@azure/msal-react";
+import {
+  AuthenticatedTemplate,
+  UnauthenticatedTemplate,
+} from "@azure/msal-react";
+import { Navigate } from "react-router-dom";
 
 function Content() {
-
   const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const account = msalInstance.getActiveAccount();
+  const { inProgress } = useMsal();
+  const [messagesData, setMessagesData] = useState(null);
+  const [error, setError] = useState(null);
 
+  const account = msalInstance.getActiveAccount();
 
   return (
     <>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <Helmet>
-          <title>Komunikaty | Ewidencja SH</title>
-        </Helmet>
-        <ProfileToolbar trigger={toggleDrawer} open={open} />
-        <DrawerMenu trigger={toggleDrawer} open={open} />
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
-          }}
-        >
-          <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Typography variant="h4">Komunikaty</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <MessagesTable />
+      <AuthenticatedTemplate>
+        <Box sx={{ display: "flex" }}>
+          <CssBaseline />
+          <Helmet>
+            <title>Komunikaty | Ewidencja SH</title>
+          </Helmet>
+          <ProfileToolbar trigger={toggleDrawer} open={open} />
+          <DrawerMenu trigger={toggleDrawer} open={open} />
+          <Box
+            component="main"
+            sx={{
+              backgroundColor: (theme) =>
+                theme.palette.mode === "light"
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              flexGrow: 1,
+              height: "100vh",
+              overflow: "auto",
+            }}
+          >
+            <Toolbar />
+            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <Typography variant="h4">Komunikaty</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Paper
+                    sx={{ p: 2, display: "flex", flexDirection: "column" }}
+                  >
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <MessagesTable />
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </Box>
-                </Paper>
+                    </Box>
+                  </Paper>
+                </Grid>
               </Grid>
-            </Grid>
-            <Footer sx={{ pt: 4 }} />
-          </Container>
+              <Footer sx={{ pt: 4 }} />
+            </Container>
+          </Box>
         </Box>
-      </Box>
+      </AuthenticatedTemplate>
+      <UnauthenticatedTemplate>
+        <Navigate to="/login" />
+      </UnauthenticatedTemplate>
     </>
   );
 }

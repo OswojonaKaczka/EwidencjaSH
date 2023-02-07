@@ -14,6 +14,8 @@ import Profile from "./views/Profile";
 import { MsalProvider } from "@azure/msal-react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Messages from "./views/admin/Messages";
+import { RouteGuard } from "./services/routeGuard";
+import { appRoles } from "./services/authConfig";
 
 const App = ({ instance }) => {
   const router = createBrowserRouter([
@@ -23,7 +25,11 @@ const App = ({ instance }) => {
     },
     {
       path: "/admin/news/messages",
-      element: <Messages />,
+      element: (
+        <RouteGuard roles={[appRoles.RoleAdmin]}>
+          <Messages />
+        </RouteGuard>
+      ),
     },
     {
       path: "/profile",

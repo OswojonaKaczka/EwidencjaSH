@@ -125,4 +125,5 @@ export const appRoles = {
   RoleALiZ: "role.aliz",
   RoleLidership: "role.lidership",
   RoleAssessment: "role.aliz.assessment",
+  RoleAzure: "role.azure",
 };
