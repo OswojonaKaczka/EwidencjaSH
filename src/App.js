@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Summary from "./Summary";
+import React, { useState, useEffect, Suspense } from "react";
+import Summary from "./views/Summary";
 import {
   createBrowserRouter,
   BrowserRouter,
@@ -8,17 +8,22 @@ import {
   Router,
   RouterProvider,
 } from "react-router-dom";
-import Login from "./Login";
-import Error from "./Error";
-import Profile from "./Profile";
+import Login from "./views/Login";
+import Error from "./views/Error";
+import Profile from "./views/Profile";
 import { MsalProvider } from "@azure/msal-react";
 import LoadingSpinner from "./components/LoadingSpinner";
+import Messages from "./views/admin/Messages";
 
 const App = ({ instance }) => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Summary />,
+    },
+    {
+      path: "/admin/news/messages",
+      element: <Messages />,
     },
     {
       path: "/profile",
@@ -37,7 +42,9 @@ const App = ({ instance }) => {
   return (
     <>
       <MsalProvider instance={instance}>
-        <RouterProvider router={router} fallbackElement={<LoadingSpinner />} />
+        <Suspense fallback={<LoadingSpinner />}>
+          <RouterProvider router={router} />
+        </Suspense>
       </MsalProvider>
     </>
   );

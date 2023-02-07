@@ -1,5 +1,5 @@
 import { Link, Typography } from "@mui/material";
-import VersionNumber from "./components/versionNumber";
+import VersionNumber from "../versionNumber";
 
 export default function Footer(props) {
   return (

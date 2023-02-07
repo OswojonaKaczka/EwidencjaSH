@@ -4,14 +4,11 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Orders from "./Orders";
-import Footer from "./Footer";
-import ProfileToolbar from "./ProfileToolbar";
-import { Alert, Button, Typography } from "@mui/material";
-import DrawerMenu from "./DrawerMenu";
+import Footer from "../components/layout/Footer";
+import { Button, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
-import logoSH from "./img/SH_280_60.png";
+import logoSH from "../img/SH_280_60.png";
+
 function Content() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {

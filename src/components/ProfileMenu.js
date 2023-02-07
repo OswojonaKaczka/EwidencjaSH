@@ -18,10 +18,10 @@ import Avatar from "@mui/material/Avatar";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import EventBus from "./common/EventBus";
-import AuthService from "./services/auth.service";
+import EventBus from "../common/EventBus";
+import AuthService from "../services/auth.service";
 import { useNavigate, Navigate } from "react-router-dom";
-import { msalInstance } from "./index";
+import { msalInstance } from "../index";
 
 export default function ProfileMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);

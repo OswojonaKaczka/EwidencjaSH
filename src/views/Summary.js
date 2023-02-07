@@ -4,18 +4,17 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Orders from "./Orders";
-import Footer from "./Footer";
-import ProfileToolbar from "./ProfileToolbar";
+import Footer from "../components/layout/Footer";
+import ProfileToolbar from "../components/layout/ProfileToolbar";
 import { Alert } from "@mui/material";
-import DrawerMenu from "./DrawerMenu";
+import DrawerMenu from "../components/layout/DrawerMenu";
 import { Helmet } from "react-helmet";
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
 } from "@azure/msal-react";
 import { Navigate } from 'react-router-dom';
+import Messages from "../components/Messages";
 
 function Content() {
   const [open, setOpen] = React.useState(true);
@@ -52,11 +51,7 @@ function Content() {
                   <Alert severity="warning">Testowy komunikat</Alert>
                 </Grid>
                 <Grid item xs={12}>
-                  <Paper
-                    sx={{ p: 2, display: "flex", flexDirection: "column" }}
-                  >
-                    <Orders />
-                  </Paper>
+                  <Messages />
                 </Grid>
               </Grid>
               <Footer sx={{ pt: 4 }} />

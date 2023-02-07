@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Badge from "@mui/material/Badge";
-import ProfileMenu from "./ProfileMenu";
+import ProfileMenu from "../ProfileMenu";
 
 const drawerWidth = 240;
 

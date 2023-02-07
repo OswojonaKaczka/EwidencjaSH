@@ -5,28 +5,13 @@ import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Orders from "./Orders";
-import Footer from "./Footer";
-import ProfileToolbar from "./ProfileToolbar";
-import {
-  Alert,
-  Badge,
-  Chip,
-  ListItemText,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-  Typography,
-} from "@mui/material";
-import DrawerMenu from "./DrawerMenu";
+import Footer from "../components/layout/Footer";
+import ProfileToolbar from "../components/layout/ProfileToolbar";
+import { Alert, Chip, TextField, Typography } from "@mui/material";
+import DrawerMenu from "../components/layout/DrawerMenu";
 import { Helmet } from "react-helmet";
-import AuthService from "./services/auth.service";
-import Title from "./components/Title";
-import { msalInstance } from "./index";
+import Title from "../components/Title";
+import { msalInstance } from "../index";
 
 function Content() {
   const [open, setOpen] = React.useState(true);
@@ -65,7 +50,8 @@ function Content() {
               </Grid>
               <Grid item xs={12}>
                 <Alert severity="error">
-                  Twoje dane pobierane są z Microsoft 365 i Ewidencji SH. Nie możesz ich zmienić samodzielnie.
+                  Twoje dane pobierane są z Microsoft 365 i Ewidencji SH. Nie
+                  możesz ich zmienić samodzielnie.
                 </Alert>
               </Grid>
               <Grid item xs={12}>
@@ -122,12 +108,12 @@ function Content() {
                       {account.idTokenClaims.roles &&
                         account.idTokenClaims.roles.map((role, i) => {
                           return (
-                              <Chip
-                                color="primary"
-                                style={{ margin: "5px" }}
-                                key={i}
-                                label={role}
-                              />
+                            <Chip
+                              color="primary"
+                              style={{ margin: "5px" }}
+                              key={i}
+                              label={role}
+                            />
                           );
                         })}
                     </Grid>

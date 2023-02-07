@@ -15,15 +15,15 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import Footer from "./Footer";
+import Footer from "../components/layout/Footer";
 import { Helmet } from "react-helmet";
-import AuthService from "./services/auth.service";
+import AuthService from "../services/auth.service";
 import { ToastContainer, toast } from "react-toastify";
-import logoSH from "./img/SH_280_60.png";
-import logoMS from "./img/ms.svg";
-import illustration from "./img/illustration.png";
+import logoSH from "../img/SH_280_60.png";
+import logoMS from "../img/ms.svg";
+import illustration from "../img/illustration.png";
 import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "./services/authConfig";
+import { loginRequest } from "../services/authConfig";
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
